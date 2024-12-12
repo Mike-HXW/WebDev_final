@@ -1,6 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
     const currentPage = document.body.getAttribute("data-page");
 
+    const BacktoIndex = document.createElement('div');
+    BacktoIndex.textContent = 'Click to go back to the beginning';
+
+    BacktoIndex.style.position = 'absolute';
+    BacktoIndex.style.top = '10px'; 
+    BacktoIndex.style.right = '10px'; 
+    BacktoIndex.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+    BacktoIndex.style.padding = '4px';
+    BacktoIndex.style.borderRadius = '4px'; 
+    BacktoIndex.style.fontSize = '12px'; 
+    BacktoIndex.style.zIndex = '1000'; 
+
+    document.body.appendChild(BacktoIndex);
+
+    BacktoIndex.addEventListener("click", function () {
+        window.location.href = "index.html";
+    });
+
     if (currentPage === "index"){
         var wordContainer = document.getElementById("wordContainer");
         const closeIcon = document.getElementById("closeIcon");
@@ -18,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "end.html";
     });
 
-    // Redirect to content.html on nextLevel click
     nextLevel.addEventListener("click", function () {
         window.location.href = "level1.html";
     });
@@ -126,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
             timerValue--;
 
             timerElement.textContent = timerValue;
+            timerElement.style.opacity = 0.2;
 
         if (timerValue <= 0) {
             clearInterval(countdown);
