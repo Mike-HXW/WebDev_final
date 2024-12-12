@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentPage = document.body.getAttribute("data-page");
 
     const BacktoIndex = document.createElement('div');
-    BacktoIndex.textContent = 'Click to go back to the beginning';
+    BacktoIndex.textContent = 'Click to start again';
 
     BacktoIndex.style.position = 'absolute';
     BacktoIndex.style.top = '10px'; 
@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
     BacktoIndex.style.padding = '4px';
     BacktoIndex.style.borderRadius = '4px'; 
     BacktoIndex.style.fontSize = '12px'; 
-    BacktoIndex.style.zIndex = '1000'; 
+    BacktoIndex.style.zIndex = '1000';
+    BacktoIndex.style.cursor = "pointer"; 
+    BacktoIndex.style.opacity = "0.5";
 
     document.body.appendChild(BacktoIndex);
 
@@ -25,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const nextLevel = document.getElementById("nextLevel");
         const FrontpageInstruction = document.getElementById("FrontpageInstruction");
         const IndexAd = document.getElementById("IndexAd");
+        const Text = document.getElementById("Text");
     
     closeIcon.addEventListener("click", function () {
         wordContainer.style.display = "none"; 
@@ -33,6 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     IndexAd.addEventListener("click", function () {
+        window.location.href = "end.html";
+    });
+
+    Text.addEventListener("click", function () {
         window.location.href = "end.html";
     });
 
@@ -67,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
             contentContainer2.style.display == "none") {
             nextLevel.style.display = "block";
         }
+
     }
     closeIcon1.addEventListener("click", function () {
         wordContainer1.style.display = "none";
@@ -133,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         nextLevel.addEventListener("click", function () {
-        window.location.href = "index.html";
+        window.location.href = "level3.html";
         });
 
 
@@ -153,6 +161,109 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000); 
 
     }
+
+        if (currentPage === "level3") {
+        var contentContainer = document.getElementById("contentContainer");
+        var wordContainer = document.getElementById("wordContainer");
+        var text1 = document.getElementById("Text1");
+        var IndexAd = document.getElementById("IndexAd");
+        var closeIcon1 = document.getElementById("closeIcon1");
+        var nextLevel = document.getElementById("nextLevel");
+        const timerElement = document.getElementById("timer");
+        let PopoutExist = false;
+        let isCountingDown = true;
+        
+        let timerValue = 15;
+
+        timerElement.style.display = "none";
+
+        const countdown = setInterval(() => {
+            if (isCountingDown && timerValue > 0) {
+                timerValue--;
+                timerElement.textContent = timerValue;
+
+                if (timerValue <= 0) {
+                    clearInterval(countdown);
+                    timerElement.textContent = "0";
+                    timerElement.style.display = "none"; 
+                }
+            }
+        }, 1000);
+
+        wordContainer.style.backgroundColor = "DeepBlue";
+        timerElement.style.color = "white";
+        timerElement.style.opacity = "0.2";
+
+        closeIcon1.addEventListener("click", function () {
+            if (timerValue <= 0) {
+                wordContainer.remove();
+                nextLevel.style.display = "block";
+            } else {
+                timerElement.style.display = "none";
+                isCountingDown = false;
+                BacktoIndex.style.display = "none";
+
+                const PopoutBox = document.createElement('content-container');
+                PopoutExist = true;
+                PopoutBox.className = 'contentContainer';
+
+                PopoutBox.style.position = 'fixed';
+                PopoutBox.style.top = '0';
+                PopoutBox.style.left = '0';
+                PopoutBox.style.width = '100%';
+                PopoutBox.style.height = '100%';
+                PopoutBox.style.fontSize = '30px';
+                PopoutBox.style.backgroundColor = 'darkgrey';
+                PopoutBox.style.color = 'white';
+                PopoutBox.style.display = 'flex';
+                PopoutBox.style.alignItems = 'center';
+                PopoutBox.style.justifyContent = 'center';
+                PopoutBox.style.zIndex = '3';
+
+                document.body.appendChild(PopoutBox);
+
+                const PopoutText = document.createElement('word-container');
+                const Textpopped = document.createElement('h2');
+                Textpopped.innerHTML = "Download our app from App Store!<br>Click here to fast download";
+
+                PopoutText.appendChild(Textpopped);
+                PopoutText.className = 'wordContainer';
+                PopoutText.style.zIndex = '5';
+                PopoutBox.appendChild(PopoutText);
+
+                const closePopout = document.createElement('img');
+                closePopout.src = 'whitecross.png';
+                closePopout.className = 'close-icon';
+                closePopout.style.cursor = 'pointer';
+                PopoutBox.appendChild(closePopout);
+
+                closePopout.addEventListener('click', function () {
+                    PopoutBox.remove();
+                    PopoutExist = false;
+                    BacktoIndex.style.display = "block";
+                    isCountingDown = true;
+                    timerElement.style.display = "block";
+                });
+
+                PopoutText.addEventListener('click', function () {
+                    window.location.href = "end.html";
+                });
+            }
+        });
+
+        IndexAd.addEventListener("click", function () {
+            window.location.href = "end.html";
+        });
+
+        text1.addEventListener("click", function () {
+            window.location.href = "end.html";
+        });
+
+        nextLevel.addEventListener("click", function () {
+            window.location.href = "index.html";
+        });
+    }
+
 
     if (currentPage === "end")
     {
